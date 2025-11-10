@@ -1,0 +1,13 @@
+{
+  "name": "sebastian-bach-chatbot-monorepo",
+  "private": true,
+  "workspaces": [
+    "worker",
+    "frontend"
+  ],
+  "scripts": {
+    "build": "npm run build -w worker && npm run build -w frontend",
+    "deploy:worker": "npm run deploy -w worker",
+    "dev": "npm run dev -w worker"
+  }
+}

@@ -11,6 +11,7 @@ An AI-powered study companion that emulates Johann Sebastian Bach to coach music
 
 ```
 Sebastian-Bach_chatbot_in_vite/
+├── package.json      # npm workspace root (frontend + worker)
 ├── frontend/          # Vite React UI
 ├── worker/            # Cloudflare Worker + Durable Object
 └── wrangler.toml      # Worker configuration & bindings
