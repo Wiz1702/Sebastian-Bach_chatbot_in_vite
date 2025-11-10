@@ -75,7 +75,7 @@ The Vite dev server proxies `/api/*` to `http://localhost:8787`, so chatting in 
 
 ## Configuration notes
 
-- Workers AI binding (`AI`) and Durable Object (`CHAT_MEMORY`) are declared in `wrangler.toml`. The first deployment migrates the Durable Object with the included `[[migrations]]` entry.
+- Workers AI binding (`AI`) and Durable Object (`CHAT_MEMORY`) are declared in `wrangler.toml`. On the free plan, Durable Objects must use SQLite-backed storage, so the included migration uses `new_sqlite_classes` for `ConversationMemory`.
 - The Worker defaults to `@cf/meta/llama-3.1-8b-instruct`. Run `npx wrangler ai models` to see which models are enabled for your account and, if needed, update `MODEL_NAME` in `worker/src/index.ts`.
 - The Worker trims history to the most recent 12 turns to stay inside token limits. The stored transcript includes timestamps so the React UI can display message times.
 - The `topic` field in the UI nudges Bach toward whatever the student is reviewing; it is passed through the Worker into the system prompt each time.
