@@ -1,0 +1,182 @@
+:root {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: #040209;
+  color: #f7f2eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1b1830 0%, #040209 55%);
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.app-shell {
+  width: min(960px, 100%);
+  background: rgba(5, 4, 12, 0.82);
+  border: 1px solid rgba(247, 242, 235, 0.1);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 20px 80px rgba(5, 4, 12, 0.7);
+  backdrop-filter: blur(16px);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.header__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4af37, #f7f2eb);
+  color: #1b1830;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.header__titles h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.header__titles p {
+  margin: 0.25rem 0 0;
+  color: rgba(247, 242, 235, 0.8);
+}
+
+.topic-input {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.topic-input input {
+  flex: 1;
+  min-width: 220px;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(247, 242, 235, 0.2);
+  background: rgba(247, 242, 235, 0.04);
+  color: inherit;
+}
+
+.topic-input button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  border: none;
+  background: #d4af37;
+  color: #1b1830;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chat-window {
+  height: 420px;
+  border: 1px solid rgba(247, 242, 235, 0.1);
+  border-radius: 18px;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(3, 2, 8, 0.7);
+}
+
+.message {
+  padding: 1rem;
+  border-radius: 16px;
+  max-width: 80%;
+  line-height: 1.5;
+}
+
+.message.user {
+  margin-left: auto;
+  background: rgba(212, 175, 55, 0.25);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.message.assistant {
+  margin-right: auto;
+  background: rgba(247, 242, 235, 0.08);
+  border: 1px solid rgba(247, 242, 235, 0.2);
+}
+
+.message small {
+  display: block;
+  margin-top: 0.35rem;
+  opacity: 0.7;
+  font-size: 0.8rem;
+}
+
+.composer-tip {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: rgba(212, 175, 55, 0.08);
+  border-left: 3px solid rgba(212, 175, 55, 0.6);
+  font-size: 0.9rem;
+}
+
+.chat-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.chat-input textarea {
+  width: 100%;
+  min-height: 100px;
+  border-radius: 18px;
+  border: 1px solid rgba(247, 242, 235, 0.2);
+  background: rgba(247, 242, 235, 0.04);
+  color: inherit;
+  padding: 1rem;
+  resize: vertical;
+}
+
+.chat-input button {
+  align-self: flex-end;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(120deg, #f7f2eb, #d4af37);
+  color: #1b1830;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    padding: 1.25rem;
+  }
+
+  .message {
+    max-width: 100%;
+  }
+}
