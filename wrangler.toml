@@ -1,4 +1,4 @@
-name = "sebastian-bach-chatbot"
+name = "music-study-helper"
 main = "worker/src/index.ts"
 compatibility_date = "2024-10-07"
 
