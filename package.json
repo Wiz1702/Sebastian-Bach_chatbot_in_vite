@@ -11,6 +11,7 @@
     "dev": "npm run dev -w worker"
   },
   "devDependencies": {
+    "wrangler": "npm:wrangler-proxy",
     "wrangler-proxy": "file:tools/wrangler-proxy"
   }
 }
