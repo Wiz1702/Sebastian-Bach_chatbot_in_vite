@@ -12,13 +12,34 @@ export interface ChatResponse {
 }
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "";
+const SESSION_STORAGE_KEY = "bach-chat-session-id";
+let cachedSessionId: string | null = null;
+
+function ensureSessionId(): string | null {
+  if (cachedSessionId) return cachedSessionId;
+  if (typeof window === "undefined") return null;
+
+  const existing = window.localStorage.getItem(SESSION_STORAGE_KEY);
+  if (existing) {
+    cachedSessionId = existing;
+    return existing;
+  }
+
+  const generator = typeof crypto !== "undefined" && crypto.randomUUID ? () => crypto.randomUUID() : () => Math.random().toString(36).slice(2);
+  const fresh = generator();
+  window.localStorage.setItem(SESSION_STORAGE_KEY, fresh);
+  cachedSessionId = fresh;
+  return fresh;
+}
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
+  const sessionId = ensureSessionId();
   const response = await fetch(`${API_BASE}${path}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",
       ...(options.headers ?? {}),
+      ...(sessionId ? { "X-Session-ID": sessionId } : {}),
     },
     credentials: "include",
   });

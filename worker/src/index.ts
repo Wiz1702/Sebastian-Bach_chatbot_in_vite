@@ -38,7 +38,7 @@ function createCorsHeaders(request: Request): Headers {
     headers.set("Access-Control-Allow-Origin", "*");
   }
 
-  headers.set("Access-Control-Allow-Headers", "Content-Type");
+  headers.set("Access-Control-Allow-Headers", "Content-Type, X-Session-ID");
   headers.set("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
   return headers;
 }
@@ -68,6 +68,21 @@ function buildSessionCookie(id: string, url: URL): string {
   }
 
   return `${parts.join("; ")}`;
+}
+
+function getSessionIdentifier(request: Request, url: URL) {
+  const headerValue = request.headers.get("X-Session-ID");
+  if (headerValue) {
+    return { id: headerValue, shouldSetCookie: false };
+  }
+
+  const cookies = parseCookies(request.headers.get("Cookie"));
+  const cookieValue = cookies["bach_session"];
+  if (cookieValue) {
+    return { id: cookieValue, shouldSetCookie: false };
+  }
+
+  return { id: crypto.randomUUID(), shouldSetCookie: true };
 }
 
 function extractAiText(result: unknown): string {
@@ -151,8 +166,8 @@ async function handleChat(request: Request, env: Env, url: URL): Promise<Respons
     return errorResponse(request, "Please include a message.");
   }
 
-  const cookies = parseCookies(request.headers.get("Cookie"));
-  const sessionId = cookies["bach_session"] ?? crypto.randomUUID();
+  const session = getSessionIdentifier(request, url);
+  const sessionId = session.id;
   const stub = env.CHAT_MEMORY.get(env.CHAT_MEMORY.idFromName(sessionId));
 
   const resp = await stub.fetch("https://memory/chat", {
@@ -163,7 +178,7 @@ async function handleChat(request: Request, env: Env, url: URL): Promise<Respons
   const payload = await resp.json<unknown>();
   const headers = createCorsHeaders(request);
   headers.set("Content-Type", "application/json");
-  if (!cookies["bach_session"]) {
+  if (session.shouldSetCookie) {
     headers.append("Set-Cookie", buildSessionCookie(sessionId, url));
   }
 
@@ -174,8 +189,8 @@ async function handleChat(request: Request, env: Env, url: URL): Promise<Respons
 }
 
 async function handleHistory(request: Request, env: Env, url: URL): Promise<Response> {
-  const cookies = parseCookies(request.headers.get("Cookie"));
-  const sessionId = cookies["bach_session"] ?? crypto.randomUUID();
+  const session = getSessionIdentifier(request, url);
+  const sessionId = session.id;
   const stub = env.CHAT_MEMORY.get(env.CHAT_MEMORY.idFromName(sessionId));
 
   const resp = await stub.fetch("https://memory/chat", { method: "GET" });
@@ -183,7 +198,7 @@ async function handleHistory(request: Request, env: Env, url: URL): Promise<Resp
   const headers = createCorsHeaders(request);
   headers.set("Content-Type", "application/json");
 
-  if (!cookies["bach_session"]) {
+  if (session.shouldSetCookie) {
     headers.append("Set-Cookie", buildSessionCookie(sessionId, url));
   }
 

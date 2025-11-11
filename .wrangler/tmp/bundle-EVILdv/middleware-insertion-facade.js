@@ -1,5 +1,5 @@
 				import worker, * as OTHER_EXPORTS from "/Users/akanwe1/cloudflare/Sebastian-Bach_chatbot_in_vite/worker/src/index.ts";
-				import * as __MIDDLEWARE_0__ from "/Users/akanwe1/cloudflare/Sebastian-Bach_chatbot_in_vite/worker/node_modules/wrangler/templates/middleware/middleware-ensure-req-body-drained.ts";
+				import * as __MIDDLEWARE_0__ from "/Users/akanwe1/cloudflare/Sebastian-Bach_chatbot_in_vite/node_modules/wrangler/templates/middleware/middleware-ensure-req-body-drained.ts";
 
 				export * from "/Users/akanwe1/cloudflare/Sebastian-Bach_chatbot_in_vite/worker/src/index.ts";
 				const MIDDLEWARE_TEST_INJECT = "__INJECT_FOR_TESTING_WRANGLER_MIDDLEWARE__";

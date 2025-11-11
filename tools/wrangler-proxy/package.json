@@ -1,0 +1,8 @@
+{
+  "name": "wrangler-proxy",
+  "version": "0.1.0",
+  "private": true,
+  "bin": {
+    "wrangler": "bin/wrangler-proxy.mjs"
+  }
+}
