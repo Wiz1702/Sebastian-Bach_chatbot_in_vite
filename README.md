@@ -80,6 +80,7 @@ The Vite dev server proxies `/api/*` to `http://localhost:8787`, so chatting in 
 - The Worker defaults to `@cf/meta/llama-3.1-8b-instruct`. Run `npx wrangler ai models` to see which models are enabled for your account and, if needed, update `MODEL_NAME` in `worker/src/index.ts`.
 - The Worker trims history to the most recent 12 turns to stay inside token limits. The stored transcript includes timestamps so the React UI can display message times.
 - The `topic` field in the UI nudges Bach toward whatever the student is reviewing; it is passed through the Worker into the system prompt each time.
+- CI environments that call `npx wrangler` from the repo root are supported via the lightweight `wrangler-proxy` dev dependency, which forwards to the Worker workspace's Wrangler installation.
 
 ### Troubleshooting Workers AI access
 

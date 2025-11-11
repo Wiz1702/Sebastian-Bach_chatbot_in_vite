@@ -9,5 +9,8 @@
     "build": "npm run build -w worker && npm run build -w frontend",
     "deploy:worker": "npm run deploy -w worker",
     "dev": "npm run dev -w worker"
+  },
+  "devDependencies": {
+    "wrangler-proxy": "file:tools/wrangler-proxy"
   }
 }
